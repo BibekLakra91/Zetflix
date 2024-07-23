@@ -1,0 +1,13 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Zetflix
+{% endblock  %}
+
+{% block  content %}
+<div class="content pt-3 ps-3">
+    <a class="btn btn-outline-light" href="{% url 'list' %}">My List</a>
+    <a class="btn btn-outline-light" href="{% url 'add' %}">Add</a>
+    <a class="btn btn-outline-light" href="{% url 'remove' %}">Remove</a>
+</div>
+{% endblock  %}
