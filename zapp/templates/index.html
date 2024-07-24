@@ -5,9 +5,355 @@ Zetflix
 {% endblock  %}
 
 {% block  content %}
-<div class="content pt-3 ps-3">
-    <a class="btn btn-outline-light" href="{% url 'list' %}">My List</a>
-    <a class="btn btn-outline-light" href="{% url 'add' %}">Add</a>
-    <a class="btn btn-outline-light" href="{% url 'remove' %}">Remove</a>
+<div class="mylist pt-3 ps-3">
+    <a class="btn btn-outline-light" data-bs-toggle="modal" data-bs-target="#modal1">My List</a>
+    <a class="btn btn-outline-light" data-bs-toggle="modal" data-bs-target="#modal2">Add</a>
+    <a class="btn btn-outline-light" data-bs-toggle="modal" data-bs-target="#modal6">Remove</a>
+</div>
+<div class="movie  pt-3 ps-3">
+    <a class="btn btn-outline-light" href="{% url 'getMovie' %}">Movies</a>
+    <a class="btn btn-outline-light" data-bs-toggle="modal" data-bs-target="#modal3">Add</a>
+    <a class="btn btn-outline-light" data-bs-toggle="modal" data-bs-target="#modal7">Remove</a>
+    <a class="btn btn-outline-light" data-bs-toggle="modal" data-bs-target="#modal10">Update</a>
+</div>
+<div class="tvshow  pt-3 ps-3">
+    <a class="btn btn-outline-light" href="{% url 'getTvshow' %}">TVshows</a>
+    <a class="btn btn-outline-light" data-bs-toggle="modal" data-bs-target="#modal5">Add</a>
+    <a class="btn btn-outline-light" data-bs-toggle="modal" data-bs-target="#modal8">Remove</a>
+    <a class="btn btn-outline-light" data-bs-toggle="modal" data-bs-target="#modal11">Update</a>
+
+</div>
+<div class="user  pt-3 ps-3">
+    <a class="btn btn-outline-light" href="{% url 'getUser' %}">Users</a>
+    <a class="btn btn-outline-light" data-bs-toggle="modal" data-bs-target="#modal4">Add</a>
+    <a class="btn btn-outline-light" data-bs-toggle="modal" data-bs-target="#modal9">Remove</a>
+    <a class="btn btn-outline-light" data-bs-toggle="modal" data-bs-target="#modal12">Update</a>
+</div>
+
+<div class="modal fade" id="modal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Username is required for User's watchlist</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form action="{% url 'myList' %}" method="post">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label for="recipient-name" class="col-form-label fw-bold">Username:</label>
+                        <input type="text" class="form-control" id="username" name="username" required>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-outline-success">Submit</button>
+                        <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="d-inline modal-header">
+                <div class="d-flex">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Username and Item Id required</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="fst-italic">
+                    Item id can be id of movie/tvshow
+                </div>
+            </div>
+            <div class="modal-body">
+                <form action="{% url 'addToList' %}" method="post">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label for="username" class="col-form-label fw-bold">Username:</label>
+                        <input type="text" class="form-control" id="username" name="username" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="itemid" class="col-form-label fw-bold">Item Id:</label>
+                        <input type="text" class="form-control" id="itemid" name="itemid" required>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-outline-success">Submit</button>
+                        <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modal3" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="d-inline modal-header">
+                <div class="d-flex">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Title is required</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+            </div>
+            <div class="modal-body">
+                <form action="{% url 'addMovie' %}" method="post">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label for="recipient-name" class="col-form-label fw-bold">Title:</label>
+                        <input type="text" class="form-control" id="titleMovie" name="titleMovie" required>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-outline-success">Submit</button>
+                        <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="modal4" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="d-inline modal-header">
+                <div class="d-flex">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Username is required</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+            </div>
+            <div class="modal-body">
+                <form action="{% url 'addUser' %}" method="post">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label for="recipient-name" class="col-form-label fw-bold">Username:</label>
+                        <input type="text" class="form-control" id="username" name="username" required>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-outline-success">Submit</button>
+                        <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="modal5" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="d-inline modal-header">
+                <div class="d-flex">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Title of TvShow is required</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+            </div>
+            <div class="modal-body">
+                <form action="{% url 'addTvshow' %}" method="post">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label for="recipient-name" class="col-form-label fw-bold">Title:</label>
+                        <input type="text" class="form-control" id="titleTvshow" name="titleTvshow" required>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-outline-success">Submit</button>
+                        <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="modal6" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="d-inline modal-header">
+                <div class="d-flex">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Username and Item Id required</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="fst-italic">
+                    Item id can be id of movie/tvshow
+                </div>
+            </div>
+            <div class="modal-body">
+                <form action="{% url 'removeFromList' %}" method="post">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label for="username" class="col-form-label fw-bold">Username:</label>
+                        <input type="text" class="form-control" id="username" name="username" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="itemid" class="col-form-label fw-bold">Item Id:</label>
+                        <input type="text" class="form-control" id="itemid" name="itemid" required>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-outline-success">Submit</button>
+                        <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="modal7" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="d-inline modal-header">
+                <div class="d-flex">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Movie Id is required</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+            </div>
+            <div class="modal-body">
+                <form action="{% url 'removeMovie' %}" method="post">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label for="movieId" class="col-form-label fw-bold">Movie Id:</label>
+                        <input type="text" class="form-control" id="movieId" name="movieId" required>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-outline-success">Submit</button>
+                        <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="modal8" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="d-inline modal-header">
+                <div class="d-flex">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">TvShow Id is required</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+            </div>
+            <div class="modal-body">
+                <form action="{% url 'removeTvshow' %}" method="post">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label for="tvshowId" class="col-form-label fw-bold">Tvshow Id:</label>
+                        <input type="text" class="form-control" id="tvshowId" name="tvshowId" required>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-outline-success">Submit</button>
+                        <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="modal9" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="d-inline modal-header">
+                <div class="d-flex">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Username is required</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+            </div>
+            <div class="modal-body">
+                <form action="{% url 'removeUser' %}" method="post">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label for="username" class="col-form-label fw-bold">Username</label>
+                        <input type="text" class="form-control" id="username" name="username" required>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-outline-success">Submit</button>
+                        <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="modal10" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="d-inline modal-header">
+                <div class="d-flex">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Movie Id and new title are required</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+            </div>
+            <div class="modal-body">
+                <form action="{% url 'updateMovie' %}" method="post">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label for="movieId" class="col-form-label fw-bold">Movie Id:</label>
+                        <input type="text" class="form-control" id="movieId" name="movieId" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="newTitle" class="col-form-label fw-bold">New Title:</label>
+                        <input type="text" class="form-control" id="newTitle" name="newTitle" required>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-outline-success">Submit</button>
+                        <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="modal11" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="d-inline modal-header">
+                <div class="d-flex">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Tvshow Id and new title are required</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+            </div>
+            <div class="modal-body">
+                <form action="{% url 'updateTvshow' %}" method="post">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label for="tvshowId" class="col-form-label fw-bold">Tvshow Id:</label>
+                        <input type="text" class="form-control" id="tvshowId" name="tvshowId" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="newTitle" class="col-form-label fw-bold">New Title:</label>
+                        <input type="text" class="form-control" id="newTitle" name="newTitle" required>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-outline-success">Submit</button>
+                        <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="modal12" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="d-inline modal-header">
+                <div class="d-flex">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Username and new name are required</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+            </div>
+            <div class="modal-body">
+                <form action="{% url 'updateUser' %}" method="post">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label for="username" class="col-form-label fw-bold">Username:</label>
+                        <input type="text" class="form-control" id="username" name="username" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="newTitle" class="col-form-label fw-bold">New Username:</label>
+                        <input type="text" class="form-control" id="newName" name="newName" required>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-outline-success">Submit</button>
+                        <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 </div>
 {% endblock  %}
