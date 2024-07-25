@@ -163,11 +163,53 @@ def removeUser(request):
     else:
         return JsonResponse({'error': 'Username is required'}, status=400)
 
-def updateMovie():
-    return redirect(settings.BACKEND_PATH + '/movie/get')
-def updateTvshow():
-    return redirect(settings.BACKEND_PATH + '/tvshow/get')
-def updateUser():
-    return redirect(settings.BACKEND_PATH + '/user/get')
+def updateMovie(request):
+    movieId = request.POST.get('movieId')
+    title = request.POST.get('newTitle')
+    if movieId and title:
+        backend_url = f"{settings.BACKEND_PATH}/movie/update"
+        payload = {'movieId': movieId, 'title':title}
+        headers = {'Content-Type': 'application/json'}
+        
+        try:
+            response = requests.patch(backend_url, json=payload, headers=headers)
+            response.raise_for_status()
+            return JsonResponse(response.json(), status=response.status_code)
+        except requests.RequestException as e:
+            return JsonResponse({'error': str(e)}, status=500)
+    else:
+        return JsonResponse({'error': 'MovieId is required'}, status=400)
+    
+def updateTvshow(request):
+    tvshowId = request.POST.get('tvshowId')
+    title = request.POST.get('newTitle')
+    if tvshowId and title:
+        backend_url = f"{settings.BACKEND_PATH}/tvshow/update"
+        payload = {'tvshowId': tvshowId, 'title':title}
+        headers = {'Content-Type': 'application/json'}
+        try:
+            response = requests.patch(backend_url, json=payload, headers=headers)
+            response.raise_for_status()
+            return JsonResponse(response.json(), status=response.status_code)
+        except requests.RequestException as e:
+            return JsonResponse({'error': str(e)}, status=500)
+    else:
+        return JsonResponse({'error': 'Tvshow Id and title are required'}, status=400)
+    
+def updateUser(request):
+    username = request.POST.get('username')
+    newName = request.POST.get('newName')
+    if username and newName:
+        backend_url = f"{settings.BACKEND_PATH}/user/update"
+        payload = {'username': username, 'newName': newName}
+        headers = {'Content-Type': 'application/json'}
+        try:
+            response = requests.patch(backend_url, json=payload, headers=headers)
+            response.raise_for_status()
+            return JsonResponse(response.json(), status=response.status_code)
+        except requests.RequestException as e:
+            return JsonResponse({'error': str(e)}, status=500)
+    else:
+        return JsonResponse({'error': 'Tvshow Id and title are required'}, status=400)
 
 
