@@ -10,8 +10,6 @@ def zetflix(request):
 def addToList(request):
     username = request.POST.get('username')
     itemid = request.POST.get('itemid')
-    print(f"Username: {username}")
-    print(f"Item ID: {itemid}")
     if username and itemid:
         backend_url = f"{settings.BACKEND_PATH}/mylist/add"
         payload = {'username': username, 'itemid': itemid }
